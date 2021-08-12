@@ -1,0 +1,29 @@
+.footer {
+    width: 100%;
+    padding-top: 15px;
+    background-color: #1C2331;
+    overflow-x: hidden;
+    background: url(https://www.vietmap.vn/App_Themes/Vietmap/images/footer-bg.png);
+    
+}
+.row{
+    display: flex;
+    flex-direction:row;
+    justify-content: space-around;
+    
+}
+.col{
+    color:#f2f4f7;
+    flex-direction: column;
+
+}
+.title{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+li{
+    font-size: 18px;
+    list-style: none;
+    padding: 10px;
+}
