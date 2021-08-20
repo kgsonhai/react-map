@@ -5,6 +5,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { RouterConfig } from '../../config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function MenuBar() {
+function TopBar() {
   const classes = useStyles();
 
   return (
@@ -55,7 +57,7 @@ export default function MenuBar() {
           <Tabs className={classes.ListBar}>
             <Tab className={classes.itemBar} label="Maps API" />
             <Tab className={classes.itemBar} label="Giải pháp GIS" />
-            <Tab className={classes.itemBar} label="Demo Maps API" />
+            <Tab className={classes.itemBar} label={<Link to={RouterConfig.demo.home}>Demo Sdk Api</Link>} />
             <Tab className={classes.itemBar} label="Tài liệu" />
             <Tab className={classes.itemBar} label="Bảng giá" />
             <Tab className={classes.itemBar} label="Liên hệ" />
@@ -66,3 +68,5 @@ export default function MenuBar() {
     </div>
   );
 }
+export default TopBar
+

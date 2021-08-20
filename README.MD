@@ -1,0 +1,1 @@
+npx crcf src/components/myComponent -p
