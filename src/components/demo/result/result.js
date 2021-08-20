@@ -7,8 +7,8 @@ import TabPanel from '@material-ui/lab/TabPanel';
 import React, { useEffect, useRef, useState } from 'react';
 import JSONPretty from 'react-json-pretty';
 import { useDispatch, useSelector } from 'react-redux';
-import apiRoute from '../../../api/routeApi';
 import queryString from 'query-string';
+import apiRoute from '../../../api/routeApi';
 
 
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function TabsMap() {
+function Result() {
 
   const classes = useStyles();
   const [value, setValue] = useState('0');
@@ -125,3 +125,4 @@ export default function TabsMap() {
     </div>
   );
 }
+export default Result

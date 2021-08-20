@@ -2,39 +2,30 @@ import React from 'react';
 import {
   BrowserRouter as Router, Route, Switch
 } from "react-router-dom";
-import PageRoute from './components/content/route';
-import Main from './components/main';
+import Demo from './components/demo/demo';
+import Layout from './components/layout/layout';
+import { RouterConfig } from './config';
 
 
 
 
 function App() {
-
-  const Content = <PageRoute/>;
-
   return (
     <Router>
-      <Switch>
+      <Layout>
+        <Switch>
+        <Route exact path={RouterConfig.home}>
+            Đây là trang home
+          </Route>
+          <Route path={RouterConfig.demo.home}>
+            <Demo />
+          </Route>
+          <Route path={RouterConfig.hotline}>
+            Đây là trang hotline
+          </Route>
+        </Switch>
+      </Layout>
 
-        <Route exact path={['/', '/route']}>
-          <Switch>
-            <Route exact path="/">
-              <Main>
-                {Content}
-              </Main>
-            </Route>
-
-            <Route path="/route">
-                <Main>
-                    Xin chào mọi người
-                </Main>
-            </Route>
-          </Switch>
-        </Route>
-
-        <Route path={'/hotline'}></Route>
-
-      </Switch>
     </Router>
   );
 }
