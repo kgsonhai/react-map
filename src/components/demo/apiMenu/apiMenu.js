@@ -9,9 +9,6 @@ import { RouterConfig } from '../../../config';
 
 const useStyles = makeStyles({
   root: {
-    marginLeft: '25px',
-    marginRight: '30px',
-    maxWidth: 180,
     maxHeight: 340,
     borderRadius: 5,
     boxShadow: "2px 5px 10px 4px #dddd",
