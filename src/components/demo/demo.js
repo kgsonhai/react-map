@@ -1,13 +1,13 @@
-import React, { Component, useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react";
 import {
   Route, Switch, useHistory
 } from "react-router-dom";
-import Result from "./result/result";
-import ApiMenu from "./apiMenu/apiMenu";
 import { RouterConfig } from "../../config";
-import RouteForm from "./formDemo/routeForm/routeForm";
+import ApiMenu from "./apiMenu/apiMenu";
 import AutosugestForm from "./formDemo/autosugestForm";
+import RouteForm from "./formDemo/routeForm/routeForm";
+import Result from "./result/result";
+import './demo.css';
 
 function Demo() {
   const histoty = useHistory()
@@ -17,7 +17,7 @@ function Demo() {
     })
   }, [])
   return (
-    <>
+    <div className="Root">
       <ApiMenu />
       <Switch>
         <Route exact path={RouterConfig.demo.autosugest.autosugest}>
@@ -27,8 +27,8 @@ function Demo() {
           <RouteForm />
         </Route>
       </Switch>
-      <Result />
-    </>
+      <Result/>
+    </div>
   )
 }
 
