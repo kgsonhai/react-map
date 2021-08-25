@@ -8,11 +8,13 @@ export const RouterConfig = {
 
         },
         place: {
-            detail: "/demo/place/detail"
+            detail: "/demo/place/detail",
+            textSearch: "/demo/place/text-search",
+
         },
         route: {
             route: "/demo/route/route",
-            eta: "/demo/eta/eta"
+            graph: "/demo/route/graph"
         }
     }
 

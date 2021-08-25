@@ -8,6 +8,8 @@ import AutosugestForm from "./formDemo/autosugestForm";
 import RouteForm from "./formDemo/routeForm/routeForm";
 import Result from "./result/result";
 import './demo.css';
+import TextSearch from "./formDemo/textSearch/textSearch";
+import Graph from "./formDemo/graph/graph";
 
 function Demo() {
   const histoty = useHistory()
@@ -25,6 +27,12 @@ function Demo() {
         </Route>
         <Route exact path={RouterConfig.demo.route.route}>
           <RouteForm />
+        </Route>
+        <Route exact path={RouterConfig.demo.place.textSearch}>
+          <TextSearch />
+        </Route>
+        <Route exact path={RouterConfig.demo.route.graph}>
+          <Graph />
         </Route>
       </Switch>
       <Result/>

@@ -34,19 +34,23 @@ export default function ApiMenu() {
       <MenuList className="listMenu">
         <MenuItem className={classes.onActive}>
           <Typography className={classes.itemText} variant="inherit">
-            <Link to={RouterConfig.demo.autosugest.autosugest}>autosugest</Link>
+            <Link to={RouterConfig.demo.autosugest.autosugest}>Autosugest</Link>
           </Typography>
         </MenuItem>
         <MenuItem className={classes.itemMenu}>
           <Typography className={classes.itemText} variant="inherit">
-            <Link to={RouterConfig.demo.route.route}>route</Link>
+            <Link to={RouterConfig.demo.route.route}>Route</Link>
           </Typography>
         </MenuItem>
         <MenuItem className={classes.itemMenu}>
-          <Typography className={classes.itemText} variant="inherit">Geocoding</Typography>
+          <Typography className={classes.itemText} variant="inherit">
+            <Link to={RouterConfig.demo.place.textSearch}>Text-search</Link>
+          </Typography>
         </MenuItem>
         <MenuItem className={classes.itemMenu}>
-          <Typography className={classes.itemText} variant="inherit">AutoComplete</Typography>
+          <Typography className={classes.itemText} variant="inherit">
+            <Link to={RouterConfig.demo.route.graph}>Graph</Link>
+          </Typography>
         </MenuItem>
         <MenuItem className={classes.itemMenu}>
           <Typography className={classes.itemText} variant="inherit">Reserve</Typography>
