@@ -88,7 +88,7 @@ function Result() {
             style={{ width: '100%', height: '510px', position: 'relative' }}
           ></div>
         </TabPanel>
-        <TabPanel value="1"><a href={UrlDefault}>{UrlDefault}</a></TabPanel>
+        <TabPanel value="1" style={{maxWidth:'200px'}}><a href={UrlDefault}>{UrlDefault}</a></TabPanel>
         <TabPanel value="2">
           <JSONPretty data={JsonDefault} style={{maxWidth:'200px'}}></JSONPretty>
         </TabPanel>
