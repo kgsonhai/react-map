@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   },
   TabContext: {
     backgroundColor: '#090e25',
+  },
+  setWidth: {
+    maxWidth:'200px'
   }
 
 }));
@@ -88,9 +91,9 @@ function Result() {
             style={{ width: '100%', height: '510px', position: 'relative' }}
           ></div>
         </TabPanel>
-        <TabPanel value="1" style={{maxWidth:'200px'}}><a href={UrlDefault}>{UrlDefault}</a></TabPanel>
-        <TabPanel value="2">
-          <JSONPretty data={JsonDefault} style={{maxWidth:'200px'}}></JSONPretty>
+        <TabPanel value="1" className={classes.setWidth}><a href={UrlDefault}>{UrlDefault}</a></TabPanel>
+        <TabPanel value="2" className={classes.setWidth}>
+          <JSONPretty data={JsonDefault} ></JSONPretty>
         </TabPanel>
       </TabContext>
     </div>

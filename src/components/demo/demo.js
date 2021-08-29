@@ -3,13 +3,13 @@ import {
   Route, Switch, useHistory
 } from "react-router-dom";
 import { RouterConfig } from "../../config";
-import ApiMenu from "./apiMenu/apiMenu";
-import AutosugestForm from "./formDemo/autosugestForm";
-import RouteForm from "./formDemo/routeForm/routeForm";
-import Result from "./result/result";
 import './demo.css';
-import TextSearch from "./formDemo/textSearch/textSearch";
+import AutosugestForm from "./formDemo/autosugestForm";
 import Graph from "./formDemo/graph/graph";
+import RouteForm from "./formDemo/routeForm/routeForm";
+import TextSearch from "./formDemo/textSearch/textSearch";
+import Result from "./result/result";
+import ApiMenu from "./apiMenu/apiMenu";
 
 function Demo() {
   const histoty = useHistory()
@@ -20,7 +20,7 @@ function Demo() {
   }, [])
   return (
     <div className="Root">
-      <ApiMenu />
+      <ApiMenu/>
       <Switch>
         <Route exact path={RouterConfig.demo.autosugest.autosugest}>
           <AutosugestForm />

@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from 'react';
 import Bottom from "../bottom/bottom";
 import TopBar from "../topBar";

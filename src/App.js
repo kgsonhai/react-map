@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import Demo from './components/demo/demo';
 import Layout from './components/layout/layout';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { RouterConfig } from './config';
 
 
