@@ -1,67 +1,124 @@
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import Paper from '@material-ui/core/Paper';
+import { Link } from '@material-ui/core';
+import Collapse from '@material-ui/core/Collapse';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { RouterConfig } from '../../../config';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { listMenu } from '../../../config';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxHeight: 340,
-    borderRadius: 5,
-    boxShadow: "2px 5px 10px 4px #dddd",
+    borderRadius: '10px',
+    maxWidth: 460,
+    backgroundSize: 'contain',
+    backgroundColor: '#f2f5ecfc',
   },
-  itemMenu: {
-    color: '#007AFC'
+  nested: {
+    paddingLeft: theme.spacing(4),
   },
-  itemText: {
-    fontSize: 17,
-    padding: 5,
+  itemBar: {
+    fontWeight: 'bold',
+    textDecoration: 'none',
+    fontSize: '22px',
+    padding: '8px',
+    color: '#2167d2',
+    fontVariantCaps: 'petite-caps',
+    fontFamily: 'Times New Roman',
   },
-  onActive: {
-    background: '#007BFF',
-    color: '#fff',
+  itemSub: {
+    textDecoration: 'none',
+    fontSize: '18px',
+    color: '#5e7fb1',
+    fontVariantCaps: 'petite-caps',
+    fontFamily: 'Times New Roman',
+  },
+  iconItem: {
+    fontSize: 'small',
   }
-});
+}));
+
 
 export default function ApiMenu() {
   const classes = useStyles();
+  const [open, setOpen] = useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const filterMenu = (parentId) => {
+    var result = [];
+    const MenuMap = listMenu.map(item => {
+      if (item.children === parentId) {
+        result.push(item);
+      }
+    });
+    return result;
+  }
+
+
+  const displayMenu = filterMenu(0).map(item => (
+    <>
+      {
+        (item.children == 0) ?
+          <>
+            <ListItem key={item.ids} button onClick={handleClick}>
+              {
+                (filterMenu(item.ids).length > 0)
+                  ?
+                  <ListItemText>
+                    <Link to={item.url} className={classes.itemBar}>{item.name}</Link>
+                    {open ? <AddCircleOutlineRoundedIcon className={classes.iconItem}/> : <RemoveCircleOutlineIcon className={classes.iconItem}/>}
+                  </ListItemText>
+                  :
+                  <NavLink to={item.url} className={classes.itemBar}>
+                    {item.name}
+                  </NavLink>
+              }
+            </ListItem>
+
+
+            {
+              (filterMenu(item.ids).length > 0) ?
+                <Collapse in={!open} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {filterMenu(item.ids).map(subItem =>
+                      <ListItem button className={classes.nested}>
+                        <NavLink to={subItem.url} className={classes.itemSub}>
+                          {subItem.name}
+                        </NavLink>
+                      </ListItem>
+                    )}
+                  </List>
+                </Collapse>
+                : ''
+            }
+
+
+          </>
+          :
+          ''
+      }
+
+
+
+    </>
+  )
+
+  )
 
   return (
-    <Paper className={classes.root}>
-      <MenuList className="listMenu">
-        <MenuItem className={classes.onActive}>
-          <Typography className={classes.itemText} variant="inherit">
-            <Link to={RouterConfig.demo.autosugest.autosugest}>Autosugest</Link>
-          </Typography>
-        </MenuItem>
-        <MenuItem className={classes.itemMenu}>
-          <Typography className={classes.itemText} variant="inherit">
-            <Link to={RouterConfig.demo.route.route}>Route</Link>
-          </Typography>
-        </MenuItem>
-        <MenuItem className={classes.itemMenu}>
-          <Typography className={classes.itemText} variant="inherit">
-            <Link to={RouterConfig.demo.place.textSearch}>Text-search</Link>
-          </Typography>
-        </MenuItem>
-        <MenuItem className={classes.itemMenu}>
-          <Typography className={classes.itemText} variant="inherit">
-            <Link to={RouterConfig.demo.route.graph}>Graph</Link>
-          </Typography>
-        </MenuItem>
-        <MenuItem className={classes.itemMenu}>
-          <Typography className={classes.itemText} variant="inherit">Reserve</Typography>
-        </MenuItem>
-        <MenuItem className={classes.itemMenu}>
-          <Typography className={classes.itemText} variant="inherit">Matrix</Typography>
-        </MenuItem>
-        <MenuItem className={classes.itemMenu}>
-          <Typography className={classes.itemText} variant="inherit">VRP</Typography>
-        </MenuItem>
-      </MenuList>
-    </Paper>
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+      className={classes.root}
+    >
+      {displayMenu}
+
+    </List>
   );
 }
