@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import {
-  Route, Switch, useHistory
+  Route, Switch, useHistory, useLocation
 } from "react-router-dom";
 import { RouterConfig } from "../../config";
 import './demo.css';
@@ -12,12 +12,15 @@ import Result from "./result/result";
 import ApiMenu from "./apiMenu/apiMenu";
 
 function Demo() {
+  const location = useLocation()
   const histoty = useHistory()
   useEffect(() => {
-    histoty.push({
-      pathname: RouterConfig.demo.autosugest.autosugest
-    })
-  }, [])
+    if(location.pathname==RouterConfig.demo.home){
+      histoty.push({
+        pathname: RouterConfig.demo.autosugest.autosugest
+      })
+    }
+  }, [location.pathname])
   return (
     <div className="Root">
       <ApiMenu/>
