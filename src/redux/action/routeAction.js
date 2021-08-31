@@ -1,4 +1,8 @@
-import { allUrl, changeAutoSuggest, changeGraphs, changeLocation, OptionVehicle, textSearch } from "../../enum/enum.js";
+import {
+    allUrl, changeAutoSuggest, changeGraphs,
+    changeLocation, OptionVehicle, textSearch,
+    changeGeocode, nearbySearch, changeRaster
+} from "../../enum/enum.js";
 
 export const changeVehicle = (vehicle) => {
     return {
@@ -7,44 +11,70 @@ export const changeVehicle = (vehicle) => {
     }
 }
 
-export const changeLoca = (origin,destination,vehicle) => {
+
+export const changeLoca = (origin, destination, vehicle) => {
     return {
         type: changeLocation.changeLocation,
-        payload: {origin,destination,vehicle},
+        payload: { origin, destination, vehicle },
     }
 }
 
 export const changeATSuggest = (text) => {
     return {
         type: changeAutoSuggest.changeAutoSuggest,
-        payload:text,
+        payload: text,
     }
 }
 
-export const changeTextPlace = (address,location) => {
+export const changeGeocoding = (address) => {
+    return {
+        type: changeGeocode.changeGeocode,
+        payload: address,
+    }
+}
+
+
+
+export const changeTextPlace = (address, location) => {
     return {
         type: textSearch.searchPlace,
-        payload:{address,location},
+        payload: { address, location },
     }
 }
 
-export const changeGraph = (point,vehicle) => {
+export const changeNearbyPlace = (location, radius, text) => {
+    return {
+        type: nearbySearch.nearbyPlace,
+        payload: { location, radius, text },
+    }
+}
+
+export const changeGraph = (point, vehicle) => {
     return {
         type: changeGraphs.changeGraph,
-        payload:{point,vehicle},
+        payload: { point, vehicle },
     }
 }
 
 export const changeGraphVehicle = (vehicle) => {
     return {
         type: changeGraphs.changeGraphVehicle,
-        payload:vehicle,
+        payload: vehicle,
     }
 }
 
-export const changeUrl = (url,json) => {
+export const changeUrl = (url, json) => {
     return {
         type: allUrl.changURL,
-        payload:{url,json},
+        payload: { url, json },
     }
 }
+
+
+export const TileRaster = (zoom, X, Y) => {
+    return {
+        type: changeRaster.changeRaster,
+        payload: { zoom, X, Y },
+    }
+}
+

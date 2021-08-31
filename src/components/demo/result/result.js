@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow:2,
+    flexGrow: 2,
     maxHeight: '100%',
     backgroundColor: '#f7f7f7',
     border: '1px solid #ddd',
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#090e25',
   },
   setWidth: {
-    maxWidth:'200px'
+    maxWidth: '800px'
   }
 
 }));
@@ -67,7 +67,7 @@ function Result() {
 
     initMap();
 
-  },[value]);
+  }, [value]);
 
 
 
