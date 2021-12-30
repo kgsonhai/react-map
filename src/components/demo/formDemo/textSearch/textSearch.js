@@ -10,16 +10,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import apiRoute from '../../../../api/routeApi';
-import { changeATSuggest, changeUrl } from '../../../../redux/action/routeAction';
+import apiTextSearch from '../../../../api/apiTextSearch';
+import { changeTextPlace, changeUrl } from '../../../../redux/action/routeAction';
 import queryString from 'query-string';
-import apiAutoSuggest from '../../../../api/apiAutosuggest';
-
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 260,
         minheight: 500,
         marginLeft: '20px',
         marginRight: '20px',
@@ -40,51 +37,60 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function autosugestForm() {
+export default function TextSearch() {
 
 
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const addressDefault = useSelector(state => state.ATSuggest.text);
+    const addressDefault =  useSelector(state => state.textSearchPlace.address);
+    const locationDefault =  useSelector(state => state.textSearchPlace.location);
+
 
     const formik = useFormik({
         initialValues: {
             address: addressDefault,
+            location: locationDefault
         },
-        onSubmit: values => {      
+        onSubmit: values => {
             const address = values.address;
+            const location = values.location;
 
-            const action = changeATSuggest(address);
+            const action = changeTextPlace(address,location);
             dispatch(action);
         }
     });
 
-    const Text = useSelector(state => state.ATSuggest.text);
-    const Key = useSelector(state => state.ATSuggest.key);
+    const Address =  useSelector(state => state.textSearchPlace.address);
+    const Location =  useSelector(state => state.textSearchPlace.location);
+    const Key =  useSelector(state => state.textSearchPlace.key);
+
 
     useEffect(() => {
-        const getMap = async () => {
-          try {
-            const params = {
-              text:Text,
-              Key: Key
-            };
-            const response = await apiAutoSuggest.getAll(params);    
-    
-            const url = 'https://api-dev.map4d.vn/sdk/autosuggest?' + queryString.stringify(params);  
-            const json = JSON.stringify(response);
+      const getMap = async () => {
+        try {
+          const params = {
+            text:Address,
+            location:Location,
+            Key: Key
+          };
+          const response = await apiTextSearch.getAll(params);
+  
+          const url = 'https://api-dev.map4d.vn/sdk/place/text-search?' + queryString.stringify(params);  
+          const json = JSON.stringify(response);
 
-            const actionUrl = changeUrl(url,json);
-            dispatch(actionUrl);
-    
-          } catch (error) {
-            console.log('loi :' + error);
-          }
+          console.log(url);
+
+          const actionUrl = changeUrl(url,json);
+          dispatch(actionUrl);
+  
+        } catch (error) {
+          console.log('loi :' + error);
         }
-        getMap();
-      })
-    
+      }
+      getMap();
+    })
+
 
 
     return (
@@ -96,12 +102,12 @@ export default function autosugestForm() {
                             <CloseIcon />
                         </IconButton>
                     }
-                    title="API Autosuggest"
+                    title="API Place"
                 />
             </Card>
-            <br /><br />
+            <br/><br/>
 
-            <form onSubmit={formik.handleSubmit} >
+            <form onSubmit={formik.handleSubmit}>
 
                 <FormControl>
                     <InputLabel htmlFor="component-error">Nhập tên hoặc địa chỉ</InputLabel>
@@ -113,11 +119,23 @@ export default function autosugestForm() {
                         onChange={formik.handleChange}
                         aria-describedby="component-error-text"
                     />
+                </FormControl><br /><br/>
+
+                <FormControl>
+                    <InputLabel htmlFor="component-error">Nhập vị trí tọa độ</InputLabel>
+                    <Input
+                        type="text"
+                        name="location"
+                        defaultValue={locationDefault}
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        aria-describedby="component-error-text"
+                    />
                 </FormControl><br />
 
                 <Button
-                    type='submit'
-                    style={{ marginTop: '30px', paddingTop: '10px', paddingBottom: '10px', paddingLeft: '30px', paddingRight: '30px' }} variant="contained" color="primary">
+                type='submit' 
+                style={{ marginTop: '30px', paddingTop: '10px', paddingBottom: '10px', paddingLeft: '30px', paddingRight: '30px' }} variant="contained" color="primary">
                     Send
                 </Button>
             </form>

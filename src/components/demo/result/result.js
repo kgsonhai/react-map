@@ -6,24 +6,24 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import React, { useEffect, useRef, useState } from 'react';
 import JSONPretty from 'react-json-pretty';
-import { useDispatch, useSelector } from 'react-redux';
-import queryString from 'query-string';
-import apiRoute from '../../../api/routeApi';
+import { useSelector } from 'react-redux';
+
 
 
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow:2,
     maxHeight: '100%',
-    marginRight: '20px',
-    marginLeft: '10px',
-    flexGrow: 1,
     backgroundColor: '#f7f7f7',
     border: '1px solid #ddd',
   },
   TabContext: {
     backgroundColor: '#090e25',
+  },
+  setWidth: {
+    maxWidth:'200px'
   }
 
 }));
@@ -48,16 +48,17 @@ function Result() {
 
     let polyline = new map4d.Polyline({
       path: [
-          [106.699380, 10.772431],
-          [106.700147, 10.773201],
-          [106.700763, 10.771783],
-          [106.701901, 10.772302],
-          [106.701493, 10.773267],
-          [106.702835, 10.773599]
+        [106.699380, 10.772431],
+        [106.700147, 10.773201],
+        [106.700763, 10.771783],
+        [106.701901, 10.772302],
+        [106.701493, 10.773267],
+        [106.702835, 10.773599]
       ],
       strokeColor: "#ff0000",
       strokeOpacity: 1.0,
-      strokeWidth: 5})
+      strokeWidth: 5
+    })
     // Thêm polyline vào bản đồ
     polyline.setMap(map)
   }
@@ -69,39 +70,10 @@ function Result() {
   },[value]);
 
 
-  const Vehicle = useSelector(state => state.searchMap.vehicle);
-  const Origin = useSelector(state => state.searchMap.origin);
-  const Destination = useSelector(state => state.searchMap.destination);
-  const Key = useSelector(state => state.searchMap.key);
 
-  
-  const [contentJson,setContent] = useState();
-  const [requestUrl,setRequestUrl] = useState();
+  const UrlDefault = useSelector(state => state.urlAPI.url);
+  const JsonDefault = useSelector(state => state.urlAPI.json);
 
-
-  useEffect(() => {
-    const getMap = async () => {
-      try {
-        const params = {
-          origin: Origin,
-          destination: Destination,
-          mode: Vehicle,
-          Key: Key
-        };
-        const response = await apiRoute.getAll(params);
-
-        const url = 'https://api-dev.map4d.vn/sdk/route?' + queryString.stringify(params);
-        setRequestUrl(url);
-
-        const json = JSON.stringify(response);
-        setContent(json);
-
-      } catch (error) {
-        console.log('loi :' + error);
-      }
-    }
-    getMap();
-  })
 
   return (
     <div className={classes.root}>
@@ -119,8 +91,10 @@ function Result() {
             style={{ width: '100%', height: '510px', position: 'relative' }}
           ></div>
         </TabPanel>
-        <TabPanel value="1"><a href={requestUrl}>{requestUrl}</a></TabPanel>
-        <TabPanel value="2"><JSONPretty id="json-pretty" data={contentJson}></JSONPretty></TabPanel>
+        <TabPanel value="1" className={classes.setWidth}><a href={UrlDefault}>{UrlDefault}</a></TabPanel>
+        <TabPanel value="2" className={classes.setWidth}>
+          <JSONPretty data={JsonDefault} ></JSONPretty>
+        </TabPanel>
       </TabContext>
     </div>
   );

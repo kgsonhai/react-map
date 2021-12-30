@@ -7,9 +7,12 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeLoca, changeVehicle } from '../../../../redux/action/routeAction';
+import apiRoute from '../../../../api/routeApi';
+import { changeLoca, changeUrl, changeVehicle } from '../../../../redux/action/routeAction';
+import queryString from 'query-string';
+import { Card, CardHeader, IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,11 +69,54 @@ function RouteForm() {
     }
   });
 
+  const Vehicle = useSelector(state => state.searchMap.vehicle);
+  const Origin = useSelector(state => state.searchMap.origin);
+  const Destination = useSelector(state => state.searchMap.destination);
+  const Key = useSelector(state => state.searchMap.key);
+
+
+  useEffect(() => {
+    const getMap = async () => {
+      try {
+        const params = {
+          origin: Origin,
+          destination: Destination,
+          mode: Vehicle,
+          Key: Key
+        };
+        const response = await apiRoute.getAll(params);
+
+        const url = 'https://api-dev.map4d.vn/sdk/route?' + queryString.stringify(params);
+        const json = JSON.stringify(response);
+
+        const actionUrl = changeUrl(url, json);
+        dispatch(actionUrl);
+
+
+      } catch (error) {
+        console.log('loi :' + error);
+      }
+    }
+    getMap();
+  })
+
 
 
   return (
     <div className={classes.root}>
       <form onSubmit={formik.handleSubmit}>
+
+        <Card className={classes.card}>
+          <CardHeader
+            action={
+              <IconButton aria-label="settings">
+              </IconButton>
+            }
+            title="API Route"
+          />
+        </Card>
+        <br />
+
         <FormControl component="fieldset">
           <RadioGroup onChange={onSelectedVehicle} className={classes.radioGroup} row aria-label="position" name="position" defaultValue="top" value={vehicle}>
             <FormControlLabel className={classes.itemRadio} value="car" control={<Radio color="primary" />} label="Xe ôtô" />
@@ -113,4 +159,4 @@ function RouteForm() {
     </div>
   );
 }
-export default RouteForm 
+export default RouteForm
